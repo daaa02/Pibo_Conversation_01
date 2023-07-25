@@ -136,9 +136,9 @@ def o_tired():
     o.show(); time.sleep(1)
 
 def o_listen():
-    o.draw_image("/home/pi/Pibo_Play/data/behavior/icon/icon_recognition3.png")
+    o.draw_image("/home/pi/Pibo_Package_01/Pibo_Play/data/behavior/icon/icon_recognition3.png")
     o.show(); time.sleep(1)
-    o.draw_image("/home/pi/Pibo_Play/data/behavior/icon/icon_recognition2.png")
+    o.draw_image("/home/pi/Pibo_Package_01/Pibo_Play/data/behavior/icon/icon_recognition2.png")
     o.show(); time.sleep(1)
-    o.draw_image("/home/pi/Pibo_Play/data/behavior/icon/icon_recognition1.png")
+    o.draw_image("/home/pi/Pibo_Package_01/Pibo_Play/data/behavior/icon/icon_recognition1.png")
     o.show(); time.sleep(1)

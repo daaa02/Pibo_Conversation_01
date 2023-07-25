@@ -16,7 +16,7 @@ from openpibo.device import Device
 from openpibo.oled import Oled
 
 # my module
-sys.path.append('/home/pi/Pibo_Play/data')
+sys.path.append('/home/pi/Pibo_Package_01/Pibo_Play/data')
 
 import behavior.eye_list as eye
 import behavior.display_list as oled

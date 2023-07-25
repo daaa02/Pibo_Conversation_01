@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# 사회기술-신발을 신고 의자에 올라가지 않아요
+# 사회기술-차례대로 순서를 지켜요
 
 import os, sys
 import re
@@ -12,7 +12,7 @@ import json
 
 # sys.path.append('/home/kiro/workspace/Conversation_Scenarios/')
 
-sys.path.append('/home/pi/Pibo_Play/')
+sys.path.append('/home/pi/Pibo_Package_01/Pibo_Play/')
 from data.p_conversation_manage import ConversationManage, WordManage, NLP
 from data.speech_to_text import speech_to_text
 from data.text_to_speech import TextToSpeech, text_to_speech
@@ -35,7 +35,7 @@ cwp = csv.writer(csv_preference)
 crc = csv.reader(csv_conversation, delimiter=',', doublequote=True, lineterminator='\r\n', quotechar='"')
 
 
-class Com():
+class Mus():
     
     def __init__(self): 
         with open('/home/pi/name_config.json', 'r') as f:
@@ -48,28 +48,26 @@ class Com():
         
         self.Positive = ['pos', '좋아', '좋은', '좋았', '좋다', '재미있', '재미 있', '재밌', '재밌어']
         self.Negative = ['neg', '별로', '아니', '안 해', '안해', '안 할래', '안 하', '싫어', '싫', '재미없', '재미 없']
-        self.Neutral = ['neu', '글쎄', '몰라', '모르', '몰라', '몰랐', '보통']    
+        self.Neutral = ['neu', '글쎄', '몰라', '모르', '몰라', '몰랐', '보통']  
                 
         
-    def com_1(self):
+    def mus_1(self):
         
-        pibo = cm.tts(bhv="do_suggestion_S", string=f"동그라미에 동물 넣기 놀이를 해보자!")
+        pibo = cm.tts(bhv="do_suggestion_S", string=f"풍선 축구 놀이를 해보자!")
         
         time.sleep(1)
-        pibo = cm.tts(bhv="do_explain_B", string=f"이번 놀이는 훌라후프, 종이와 그림도구, 가위가 필요해!") 
-        pibo = cm.tts(bhv="do_waiting_B", string=f"훌라후프가 없으면 이불이나 수건으로 동그라미 모양을 만들어도 좋아. 준비가 되면 준비 됐다고 말해줘~")
+        pibo = cm.tts(bhv="do_explain_A", string=f"이번 놀이는 풍선이 두 개 정도 필요해! 준비가 되면 준비 됐어 라고 말해줘~")
         cwc.writerow(['pibo', pibo])
         
         while True:
-            time.sleep(1)
             answer = cm.responses_proc(re_bhv="do_waiting_A", re_q=f"준비가 되면 준비 됐다고 말해줘~")
             cwc.writerow(['user', answer[0][1], answer[1]])
             self.reject.append(answer[1])
             
             if answer[0][0] == "done" or answer[0][0] == "yes" or answer[0][0] == "next":
                 pibo = cm.tts(bhv="do_joy_A", string=f"좋았어. 놀이 방법을 알려줄께!")
-                time.sleep(1)
-                pibo = cm.tts(bhv="do_explain_B", string=f"종이에 동물을 그리고 오린 다음에, 입으로 바람을 불어서 동그라미 모양 안에 넣을꺼야.")
+                time.sleep(1)                
+                pibo = cm.tts(bhv="do_explain_B", string=f"풍선은 바람을 넣으면 재밌는 소리를 내고 높이 날아가기도 해! 풍선 꼭지를 묶으면 공처럼 놀 수도 있어.")
                 cwc.writerow(['pibo', pibo])
                 pibo = cm.tts(bhv="do_question_S", string=f"할 수 있지? 할 수 있으면 할 수 있다고 말해줘~")
                 break
@@ -83,136 +81,111 @@ class Com():
             else:
                 continue
         
-        while True: 
-            time.sleep(0.5)
+        while True:
             answer = cm.responses_proc(re_bhv="do_waiting_A", re_q=f"할 수 있으면 할 수 있다고 말해줘~")
+            cwc.writerow(['user', answer[0][1], answer[1]])
+            self.reject.append(answer[1])
             
             if answer[0][0] == "done" or answer[0][0] == "yes" or answer[0][0] == "next":
-                pibo = cm.tts(bhv="do_explain_A", string=f"입으로 바람을 불기 힘들면 도구를 사용해서 바람을 일으켜도 좋아. 준비가 되면 시작하자고 말해줘~")
-                cwc.writerow(['pibo', pibo])                
+                pibo = cm.tts(bhv="do_explain_A", string=f"좋아~ {wm.word(self.user_name, 0)}가 좋아하는 색깔의 풍선을 골라봐.")
+                cwc.writerow(['pibo', pibo])
+                time.sleep(1)
+                pibo = cm.tts(bhv="do_stop", string=f"풍선을 고르고 준비가 됐으면 시작하자고 말해줘. 준비가 되면 시작하자고 말해줘~")
                 break
             else:
                 continue
             
-        while True: 
-            time.sleep(0.5)        
+        while True:
             answer = cm.responses_proc(re_bhv="do_waiting_A", re_q=f"준비가 되면 시작하자고 말해줘~")
             cwc.writerow(['user', answer[0][1], answer[1]])
             self.reject.append(answer[1])
 
             if answer[0][0] == "done" or answer[0][0] == "yes" or answer[0][0] == "next":
-                pibo = cm.tts(bhv="do_joy_B", string=f"좋아아! 시작하자")
+                pibo = cm.tts(bhv="do_joy_B", string=f"그래애! 시작하자")
                 time.sleep(1)
-                pibo = cm.tts(bhv="do_suggestion_L", string=f"{wm.word(self.user_name, 0)}가 좋아하는 동물을 종이에 그려보자! 다 그렸으면 다 그렸다고 말해줘~")  
-                cwc.writerow(['pibo', pibo])
+                pibo = cm.tts(bhv="do_suggestion_S", string=f"자, 먼저 풍선을 불어봐~")
+                time.sleep(10)
+                pibo = cm.tts(bhv="do_suggestion_L", string=f"풍선을 묶지 말고 멀리 날려보자~")
+                time.sleep(7)
+                pibo = cm.tts(bhv="do_suggestion_L", string=f"이제 풍선을 쫓아가서 잡아 오자~")
+                time.sleep(7)
+                pibo = cm.tts(bhv="do_suggestion_L", string=f"이번에는 풍선을 불어서 꼭지를 묶어봐~")
+                time.sleep(10)
                 break
             else:
                 continue                         
-        
-        while True: 
-            time.sleep(10) 
-            answer = cm.responses_proc(re_bhv="do_waiting_B", re_q=f"동물을 종이에 다 그렸으면 다 그렸다고 말해줘~")
+            
+        while True:
+            pibo = cm.tts(bhv="do_explain_A", string=f"풍선으로 공을 만들어 축구 선수들처럼 멋지게 차보자~ 발이나 무릎으로 풍선을 차 올리는 거야~ 준비 됐으면 준비 됐다고 말해줘!")            
+            answer = cm.responses_proc(re_bhv="do_waiting_A", re_q=f"준비 됐으면 준비 됐다고 말해줘!")
             cwc.writerow(['user', answer[0][1], answer[1]])
             self.reject.append(answer[1])
-            
+
             if answer[0][0] == "done" or answer[0][0] == "yes" or answer[0][0] == "next":
-                pibo = cm.tts(bhv="do_joy_B", string=f"우와아~! 정말 멋진 걸?")
-                time.sleep(1)                
-                pibo = cm.tts(bhv="do_suggestion_L", string=f"다른 동물들도 더 그려보자. 시간을 줄게 자유롭게 그려봐. 다 그렸으면 다 그렸다고 말해줘~")
-                cwc.writerow(['pibo', pibo])
-                time.sleep(120)
-                pibo = cm.tts(bhv="do_suggestion_L", string=f"다 그렸으면 다 그렸다고 말해줘~")                
+                time.sleep(1)
+                pibo = cm.tts(bhv="do_suggestion_S", string=f"자, 내가 열을 셀 동안 해봐. 그럼 시이작!")
+                time.sleep(1)
+                pibo = cm.tts(bhv="do_suggestion_S", string=f"하나, 두울, 세엣, 네엣, 다섯, 여섯, 일곱, 여덟, 아홉, 열!")
+                time.sleep(1)
+                pibo = cm.tts(bhv="do_suggestion_S", string=f"이번엔 머리로 헤딩슛을 해보자~ 제자리에서 뛰면서 머리로 풍선을 치는 거야! 준비 됐으면 준비 됐다고 말해줘!")
+                break
+            else:
+                continue      
+            
+        while True:            
+            answer = cm.responses_proc(re_bhv="do_waiting_A", re_q=f"준비 됐으면 준비 됐다고 말해줘!")
+            cwc.writerow(['user', answer[0][1], answer[1]])
+            self.reject.append(answer[1])
+
+            if answer[0][0] == "done" or answer[0][0] == "yes" or answer[0][0] == "next":
+                time.sleep(1)
+                pibo = cm.tts(bhv="do_suggestion_S", string=f"내가 열을 셀 동안 해봐. 그럼 시이작!")
+                time.sleep(1)
+                pibo = cm.tts(bhv="do_suggestion_S", string=f"하나, 두울, 세엣, 네엣, 다섯, 여섯, 일곱, 여덟, 아홉, 열!")
+                time.sleep(1)
+                pibo = cm.tts(bhv="do_compliment_S", string=f"정말 축구 선수 같은 걸? 멋지다아! 열심히 놀이한 {wm.word(self.user_name, 0)}가 최고야~ 정말 신났어!")
                 break
             else:
                 continue
-            
-        while True:
-            time.sleep(10) 
-            audio.audio_play(filename="/home/pi/Pibo_Play/data/behavior/audio/sound_standing.mp3", volume=-2000, background=False)
-            answer = cm.responses_proc(re_bhv="do_waiting_A", re_q=f"다 그렸으면 다 그렸다고 말해줘~")
-            cwc.writerow(['user', answer[0][1], answer[1]])
-            self.reject.append(answer[1])
-
-            if answer[0][0] == "done" or answer[0][0] == "yes" or answer[0][0] == "next":
-                audio.stop()
-                pibo = cm.tts(bhv="do_suggestion_S", string=f"좋아! 이번에는 그림 모양대로 종이를 오리자. 다 오렸으면 다 오렸다고 말해줘~")
-                cwc.writerow(['pibo', pibo])
-                break
-            else:
-                continue
         
         while True:
-            time.sleep(10) 
-            answer = cm.responses_proc(re_bhv="do_waiting_A", re_q=f"그림 모양대로 다 오렸으면 다 오렸다고 말해줘~")
-            cwc.writerow(['user', answer[0][1], answer[1]])
-            self.reject.append(answer[1])
-
-            if answer[0][0] == "done" or answer[0][0] == "yes" or answer[0][0] == "next":
-                pibo = cm.tts(bhv="do_suggestion_S", string=f"그럼 이제 바닥에 동물그림을 뿌려놓자.")
-                time.sleep(1)
-                pibo = cm.tts(bhv="do_stop", string=f"내가 시~작! 하면 입으로 바람을 불어서 동물들을 동그라미 안에 날려 넣는거야. 다 날려 넣었으면 다 했다고 말해줘!")
-                cwc.writerow(['pibo', pibo])
-                time.sleep(1)
-                pibo = cm.tts(bhv="do_joy_B", string=f"준비이~~ 시이작!")                
-                break
-            else:
-                continue
-            
-        while True:
-            audio.audio_play(filename="/home/pi/Pibo_Play/data/behavior/audio/sound_standing.mp3", volume=-2000, background=False)             
-            answer = cm.responses_proc(re_bhv="do_waiting_A", re_q=f"동물들을 모두 날려 넣었어? 다 했으면 다 했다고 말해줘.")
-            cwc.writerow(['user', answer[0][1], answer[1]])
-            self.reject.append(answer[1])
-
-            if answer[0][0] == "done" or answer[0][0] == "yes" or answer[0][0] == "next":
-                audio.stop()
-                pibo = cm.tts(bhv="do_compliment_S", string=f"우와아~ 우리만의 동물원이 완성된 것 같아. 멋지다아~")
-                time.sleep(1)
-                pibo = cm.tts(bhv="do_compliment_L", string=f"오늘 다양한 동물 그림을 열심히 만들었어! 자랑스러워~")
-                break
-            else:
-                continue            
-        
-        while True:          
-            pibo = cm.tts(bhv="do_question_S", string=f"{wm.word(self.user_name, 0)}는 어떤 동물 그림이 제일 마음에 들었어?")
-            answer = cm.responses_proc(re_bhv="do_waiting_A", re_q=f"어떤 동물 그림이 제일 마음에 들었어?")
-            cwc.writerow(['pibo', pibo])
-            cwc.writerow(['user', answer[0][1], answer[1]])
-            self.reject.append(answer[1])
-
-            pibo = cm.tts(bhv="do_compliment_S", string=f"그랬구나. 파이보도 참 잘 그렸다고 생각했어.")
-            break                   
-            
-        while True:          
-            pibo = cm.tts(bhv="do_question_S", string=f"{wm.word(self.user_name, 0)}는 키워보고 싶은 동물이 있어?")            
-            answer = cm.responses_proc(re_bhv="do_question_S", re_q=f"키워보고 싶은 동물이 있어?")
+            pibo = cm.tts(bhv="do_suggestion_L", string=f"풍선으로 하는 축구 놀이 재미있었어?")
+            answer = cm.responses_proc(re_bhv="do_waiting_A", re_q=f"풍선으로 하는 축구 놀이 재미있었어?")
             cwc.writerow(['pibo', pibo])
             cwc.writerow(['user', answer[0][1], answer[1]])
             self.reject.append(answer[1])
             
-            if answer[0][0] == "yes":
-                pibo = cm.tts(bhv="do_question_S", string=f"왜 키우고 싶어?")
-                answer = cm.responses_proc(re_bhv="do_question_S", re_q=f"왜 키우고 싶어?")
-                cwc.writerow(['pibo', pibo])
-                cwc.writerow(['user', answer[0][1], answer[1]])
-                self.reject.append(answer[1])
-
-                pibo = cm.tts(bhv="do_compliment_S", string=f"그렇구나. {wm.word(self.user_name, 0)}는 동물을 정말 정성껏 잘 돌봐줄 것 같아.")                    
-                break
+            pibo = cm.tts(bhv="do_suggestion_L", string=f"그랬구나. 열심히 하는 모습이 보기 좋았어!")
+            time.sleep(1)
             
-        pibo = cm.tts(bhv="do_stop", string=f"{wm.word(self.user_name, 0)}가 열심히 놀이를 했으니, 오늘은 술술 스탬프를 찍어줄께.")
+            pibo = cm.tts(bhv="do_question_S", string=f"파이보는 오늘 달리느라 힘들었어. {wm.word(self.user_name, 0)}는 놀이하면서 어려운 거 있었어?")
+            answer = cm.responses_proc(re_bhv="do_question_S", re_q=f"놀이하면서 어려운 거 있었어?")
+            cwc.writerow(['pibo', pibo])
+            cwc.writerow(['user', answer[0][1], answer[1]])
+            self.reject.append(answer[1])
+            
+            pibo = cm.tts(bhv="do_question_S", string=f"정말? 왜?")
+            answer = cm.responses_proc(re_bhv="do_question_S", re_q=f"왜 그 거리가 제일 재미있었어?")
+            cwc.writerow(['pibo', pibo])
+            cwc.writerow(['user', answer[0][1], answer[1]])
+            self.reject.append(answer[1])
+            
+            pibo = cm.tts(bhv="do_question_S", string=f"그랬구나. 이야기 들려줘서 고마워.")
+            break          
+            
+        pibo = cm.tts(bhv="do_stop", string=f"{wm.word(self.user_name, 0)}가 열심히 놀이를 했으니, 오늘은 튼튼 스탬프를 찍어줄께.")
         behavior.do_stamp()
         time.sleep(1)
         
-        pibo = cm.tts(bhv="do_suggestion_S", string=f"사진을 찍어 줄게! 가장 마음에 드는 동물 그림을 들고 브이해봐!")        
-        behavior.do_photo()
+        pibo = cm.tts(bhv="do_suggestion_S", string=f"사진을 찍어 줄게! 축구 선수처럼 포즈를 취해봐!")
+        behavior.do_photo()        
         
         
         # 3. 피드백 수집
         time.sleep(1)                   
         pibo = cm.tts(bhv='do_question_S', string="파이보랑 노는 거 재미있었어? 재밌었는지, 별로였는지 얘기해줄래?")
-        answer = cm.responses_proc(re_bhv="do_question_S", re_q=f"파이보랑 노는 거 재미있었어?")
-        
+        answer = cm.responses_proc(re_bhv="do_question_S", re_q=f"파이보랑 노는 거 재미있었어?")        
+
         if len(answer[0][1]) != 0:
             for i in range(len(self.Negative)):
                 if self.Negative[i] in answer[0][1]:
@@ -222,18 +195,18 @@ class Com():
                     self.aa = 'positive'                
             if len(self.aa) == 0: 
                 self.aa = 'else'
-             
+              
         if self.aa == "negative":
             cm.tts(bhv="do_joy_A", string=f"파이보는 {wm.word(self.user_name, 0)}랑 놀아서 재미있었어!")
-            self.score = [-0.5, 0.0, 0.0, 0.0]
-        
+            self.score = [0.0, 0.0, 0.0, -0.5]
+          
         if self.aa == "positive":
             cm.tts(bhv="do_joy_A", string=f"나도야! 다음에 또 재미있는 놀이 알려줄게.")
-            self.score = [0.5, 0.0, 0.0, 0.0]
+            self.score = [0.0, 0.0, 0.0, 0.5]
             
         if self.aa != "negative" and self.aa != "positive": # if answer[0][0] == "neutral":
             cm.tts(bhv="do_joy_A", string=f"{wm.word(self.user_name, 0)}랑 노는 건 정말 재미있어.")
-            self.score = [-0.25, 0.0, 0.0, 0.0]
+            self.score = [0.0, 0.0, 0.0, -0.25]
         
         cwp.writerow([today, filename, self.score[0], self.score[1], self.score[2],self.score[3]])
 
@@ -251,15 +224,13 @@ class Com():
         cwc.writerow(['%Turns', ])
         cwc.writerow(['%Rejections', ])
         cwc.writerow(['%Misrecognitions', ])
-
+        
         # 5. 활동 완료 기록
         today_end = datetime.now().strftime('%m%d_%H%M')        
         gss.write_sheet(name=self.user_name, today=f'end_{today_end}', activities=filename)
-        
-
 
 
 if __name__ == "__main__":
     
-    com = Com()
-    com.com_1()
+    mus = Mus()
+    mus.mus_1()
