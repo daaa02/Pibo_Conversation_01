@@ -12,7 +12,7 @@ import json
 
 # sys.path.append('/home/kiro/workspace/Conversation_Scenarios/')
 
-sys.path.append('/home/pi/Pibo_Package_01/Pibo_Play/')
+sys.path.append('/home/pi/Pibo_Play/')
 from data.p_conversation_manage import ConversationManage, WordManage, NLP
 from data.speech_to_text import speech_to_text
 from data.text_to_speech import TextToSpeech, text_to_speech
@@ -81,7 +81,8 @@ class Com():
                 time.sleep(1)
 
                 pibo = cm.tts(bhv="do_joy_A", string=f"우리는 춤을 추는 유령이에요. ")
-                audio.audio_play(filename="/home/pi/Pibo_Package_01/Pibo_Play/data/behavior/audio/sound_dancing.mp3", volume=-1500, background=True)
+                time.sleep(1)                 
+                audio.audio_play(filename="/home/pi/Pibo_Play/data/behavior/audio/sound_dancing.mp3", volume=-1500, background=True)
                 behavior.do_dance()
 
                 pibo = cm.tts(bhv="do_stop", string=f"음악이 멈췄어. 유령은 움직일 수 없어!")
@@ -90,15 +91,15 @@ class Com():
                 pibo = cm.tts(bhv="do_question_S", string=f"안 움직이고 있지? 움직이면 유령인게 들킬거야!")                
 
                 time.sleep(1)
-                pibo = cm.tts(bhv="do_joy_B", string=f"음악이 다시 나온다! 춤추자~ 우리는 음악이 나오면 춤을 추는 유령이에요~!")
-                audio.audio_play(filename="/home/pi/Pibo_Package_01/Pibo_Play/data/behavior/audio/sound_dancing.mp3", volume=-1500, background=True)
+                pibo = cm.tts(bhv="do_joy_B", string=f"음악이 다시 나온다! 춤추자~")
+                audio.audio_play(filename="/home/pi/Pibo_Play/data/behavior/audio/sound_dancing.mp3", volume=-1500, background=True)
                 behavior.do_dance()
             
                 pibo = cm.tts(bhv="do_stop", string=f"음악이 멈췄어. 유령은 움직일 수 없어! 움직이면 유령인게 들킬거야!")
                 
                 time.sleep(1)
-                pibo = cm.tts(bhv="do_joy_A", string=f"음악이 다시 나온다! 춤추자~ 우리는 음악이 나오면 춤을 추는 유령이에요~!")
-                audio.audio_play(filename="/home/pi/Pibo_Package_01/Pibo_Play/data/behavior/audio/sound_dancing.mp3", volume=-1500, background=True)
+                pibo = cm.tts(bhv="do_joy_A", string=f"음악이 다시 나온다! 춤추자~ ")
+                audio.audio_play(filename="/home/pi/Pibo_Play/data/behavior/audio/sound_dancing.mp3", volume=-1500, background=True)
                 behavior.do_dance()
                 
                 pibo = cm.tts(bhv="do_stop", string=f"음악이 멈췄어. 안 움직이고 있지? 움직이면 유령인게 들킬거야!")
@@ -129,7 +130,7 @@ class Com():
             cwc.writerow(['user', answer[0][1], answer[1]])
             self.reject.append(answer[1])
             
-            pibo = cm.tts(bhv="do_question_S", string=f"그런 이유가 있었구나. {wm.word(self.user_name, 0)}는 최고의 유령댄서였어~ 다음에는 더 재미있는 춤을 추자!")
+            pibo = cm.tts(bhv="do_question_S", string=f"그런 이유가 있었구나. {wm.word(self.user_name, 0)}는 최고의 유령땐서였어~ 다음에는 더 재미있는 춤을 추자!")
             break
 
             
