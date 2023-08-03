@@ -201,8 +201,8 @@ class Mus():
         behavior.do_stamp()
         time.sleep(1)
         
-        pibo = cm.tts(bhv="do_suggestion_S", string=f"사진을 찍어 줄게! 곡식 주머니를 들고 브이 해봐!")
-        behavior.do_photo()        
+        # pibo = cm.tts(bhv="do_suggestion_S", string=f"사진을 찍어 줄게! 곡식 주머니를 들고 브이 해봐!")
+        # behavior.do_photo()        
         
         
         # 3. 피드백 수집
